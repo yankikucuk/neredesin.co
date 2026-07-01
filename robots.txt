@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://yankikucuk.github.io/neredesin.co/sitemap.xml

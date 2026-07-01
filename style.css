@@ -1,0 +1,1022 @@
+/**
+ * ============================================================================
+ * DESIGN SYSTEM — Glassmorphism
+ * ============================================================================
+ *
+ * A personal site theme built on frosted glass aesthetics with automatic
+ * light/dark mode via `prefers-color-scheme`.
+ *
+ * Typography:  Montserrat (headings & body), Roboto Mono (meta & code)
+ * Layout:      1100px max-width content, full-width frosted nav
+ * Breakpoints: 640px (mobile), 900px (tablet), 900px+ (desktop)
+ *
+ * ============================================================================
+ */
+
+/* ==========================================================================
+   1. Design Tokens
+   ========================================================================== */
+
+:root {
+  /* Text */
+  --text: #1d1d1f;
+  --text-secondary: #6e6e73;
+  --text-muted: #aeaeb2;
+
+  /* Backgrounds */
+  --bg: #f5f5f7;
+
+  /* Glass surfaces */
+  --glass: rgba(255, 255, 255, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.5);
+  --glass-hover: rgba(255, 255, 255, 0.8);
+  --glass-strong: rgba(255, 255, 255, 0.75);
+
+  /* Code & borders */
+  --code-bg: rgba(0, 0, 0, 0.04);
+  --blockquote-border: rgba(0, 0, 0, 0.12);
+  --border: rgba(0, 0, 0, 0.06);
+
+  /* Elevation */
+  --shadow: 0 2px 20px rgba(0, 0, 0, 0.04), 0 0 0 0.5px rgba(0, 0, 0, 0.06);
+  --shadow-hover:
+    0 4px 30px rgba(0, 0, 0, 0.08), 0 0 0 0.5px rgba(0, 0, 0, 0.1);
+
+  /* Shared */
+  --radius: 16px;
+  --blur: blur(40px) saturate(180%);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #f5f5f7;
+    --text-secondary: #a1a1a6;
+    --text-muted: #636366;
+    --bg: #000;
+    --glass: rgba(30, 30, 30, 0.6);
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-hover: rgba(45, 45, 45, 0.7);
+    --glass-strong: rgba(38, 38, 38, 0.75);
+    --code-bg: rgba(255, 255, 255, 0.05);
+    --blockquote-border: rgba(255, 255, 255, 0.1);
+    --border: rgba(255, 255, 255, 0.06);
+    --shadow:
+      0 2px 20px rgba(0, 0, 0, 0.3), 0 0 0 0.5px rgba(255, 255, 255, 0.06);
+    --shadow-hover:
+      0 4px 30px rgba(0, 0, 0, 0.5), 0 0 0 0.5px rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* ==========================================================================
+   2. Skip Link (Accessibility)
+   ========================================================================== */
+
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 1rem;
+  z-index: 200;
+  padding: 0.6rem 1.25rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--bg);
+  background: var(--text);
+  border-radius: 0 0 10px 10px;
+  text-decoration: none;
+  transition: top 0.2s;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* ==========================================================================
+   3. Reset & Base
+   ========================================================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family:
+    "Montserrat",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  line-height: 1.7;
+  color: var(--text);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right)
+    env(safe-area-inset-bottom) env(safe-area-inset-left);
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ==========================================================================
+   4. Navigation
+   ========================================================================== */
+
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0.75rem 1.5rem 0;
+  padding: 0.75rem 1.5rem;
+  background: var(--glass);
+  -webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+}
+
+.nav-logo {
+  font-size: 1.2rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: var(--text);
+  text-decoration: none;
+}
+
+.nav-links {
+  display: flex;
+  gap: 0.2rem;
+}
+
+.nav-links a {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  text-decoration: none;
+  padding: 0.4rem 0.85rem;
+  border-radius: 10px;
+  transition:
+    color 0.25s,
+    background 0.25s;
+  letter-spacing: 0.01em;
+}
+
+.nav-links a:hover {
+  color: var(--text);
+  background: var(--glass-hover);
+}
+
+.nav-links a.active {
+  color: var(--text);
+  background: var(--glass-hover);
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   5. Layout
+   ========================================================================== */
+
+main {
+  flex: 1;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem 2rem 4rem;
+}
+
+/* ==========================================================================
+   6. Page Header
+   ========================================================================== */
+
+.page-header {
+  margin-bottom: 3rem;
+}
+
+.page-header h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  margin-bottom: 0.5rem;
+}
+
+.page-subtitle {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  font-weight: 400;
+}
+
+/* ==========================================================================
+   7. Blog Posts
+   ========================================================================== */
+
+#content > h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  margin-bottom: 2.5rem;
+}
+
+.load-error {
+  color: var(--text-secondary);
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  font-size: 0.95rem;
+}
+
+.noscript-notice {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.noscript-notice p {
+  background: var(--glass);
+  -webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 1.5rem 2rem;
+  color: var(--text-secondary);
+}
+
+article {
+  background: var(--glass);
+  -webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 2rem;
+  margin-bottom: 1.25rem;
+  transition:
+    box-shadow 0.3s,
+    transform 0.3s;
+}
+
+article:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-1px);
+}
+
+.post-permalink {
+  display: inline-block;
+  text-decoration: none;
+  margin-bottom: 0.75rem;
+}
+
+.post-permalink:hover time {
+  text-decoration: underline;
+}
+
+article time {
+  display: inline-block;
+  font-family: "Roboto Mono", monospace;
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+}
+
+article h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.3;
+  margin-bottom: 0.75rem;
+}
+
+article h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+article p {
+  color: var(--text-secondary);
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+article strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+article ul,
+article ol {
+  margin: 0.75rem 0 1.25rem 1.25rem;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+article li {
+  margin-bottom: 0.35rem;
+}
+
+article li::marker {
+  color: var(--text-muted);
+}
+
+article blockquote {
+  border-left: 2px solid var(--blockquote-border);
+  padding: 0.75rem 1.25rem;
+  margin: 1.25rem 0;
+  background: var(--code-bg);
+  border-radius: 0 12px 12px 0;
+}
+
+article blockquote p {
+  color: var(--text-secondary);
+  margin-bottom: 0;
+  font-size: 0.9rem;
+}
+
+article pre {
+  background: #282c34;
+  padding: 1.25rem 1.5rem;
+  border-radius: 12px;
+  overflow-x: auto;
+  margin: 1.25rem 0;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  -webkit-overflow-scrolling: touch;
+}
+
+article code {
+  font-family: "Roboto Mono", "SF Mono", Menlo, monospace;
+  font-size: 0.85em;
+}
+
+article p code,
+article li code {
+  background: var(--code-bg);
+  padding: 0.2em 0.45em;
+  border-radius: 6px;
+  font-size: 0.85em;
+  border: 1px solid var(--border);
+}
+
+/* --------------------------------------------------------------------
+   7b. Syntax Highlighting — One Dark Pro
+   Fenced code blocks keep this fixed dark palette regardless of the
+   site's own light/dark theme, matching the source editor a reader
+   likely wrote the snippet in.
+   -------------------------------------------------------------------- */
+
+article pre code.hljs {
+  background: transparent;
+  color: #abb2bf;
+  padding: 0;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #5c6370;
+  font-style: italic;
+}
+
+.hljs-keyword,
+.hljs-doctag,
+.hljs-formula,
+.hljs-selector-tag {
+  color: #c678dd;
+}
+
+.hljs-section,
+.hljs-name,
+.hljs-deletion,
+.hljs-subst {
+  color: #e06c75;
+}
+
+.hljs-literal {
+  color: #56b6c2;
+}
+
+.hljs-string,
+.hljs-regexp,
+.hljs-addition,
+.hljs-meta .hljs-string {
+  color: #98c379;
+}
+
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-type,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-number {
+  color: #d19a66;
+}
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link,
+.hljs-meta,
+.hljs-selector-id,
+.hljs-title {
+  color: #61afef;
+}
+
+.hljs-built_in,
+.hljs-title.class_,
+.hljs-class .hljs-title,
+.hljs-attribute {
+  color: #e5c07b;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: 700;
+}
+
+.hljs-link {
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   8. Audio Player
+   ========================================================================== */
+
+.ap {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background: var(--glass);
+  -webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  padding: 1rem 1.25rem;
+  margin: 1.25rem 0;
+}
+
+.ap-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--glass-border);
+  background: var(--glass-strong);
+  -webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
+  color: var(--text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition:
+    background 0.25s,
+    transform 0.2s,
+    box-shadow 0.25s;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06);
+}
+
+.ap-btn:hover {
+  background: var(--glass-hover);
+  transform: scale(1.06);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.ap-btn svg {
+  width: 16px;
+  height: 16px;
+}
+
+.ap-icon-pause {
+  display: none;
+}
+
+.ap.playing .ap-icon-play {
+  display: none;
+}
+
+.ap.playing .ap-icon-pause {
+  display: block;
+}
+
+.ap-track {
+  flex: 1;
+  cursor: pointer;
+  padding: 0.5rem 0;
+}
+
+.ap-track:focus-visible {
+  outline: 2px solid var(--text);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+
+.ap-progress {
+  width: 100%;
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.ap-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--text);
+  border-radius: 2px;
+  transition: width 0.15s linear;
+}
+
+.ap-time {
+  font-family: "Roboto Mono", monospace;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  min-width: 3ch;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   9. Hero (Landing Page)
+   ========================================================================== */
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 6rem 1rem 4rem;
+}
+
+.hero-greeting {
+  font-family: "Roboto Mono", monospace;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  margin-bottom: 0.75rem;
+}
+
+.hero-name {
+  font-size: 3.5rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+  margin-bottom: 0.5rem;
+}
+
+.hero-title {
+  font-size: 1.2rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin-bottom: 2.5rem;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.hero-btn {
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  padding: 0.7rem 1.75rem;
+  border-radius: 12px;
+  transition:
+    transform 0.2s,
+    box-shadow 0.25s,
+    background 0.25s;
+}
+
+.hero-btn:hover {
+  transform: translateY(-2px);
+}
+
+.hero-btn-primary {
+  background: var(--text);
+  color: var(--bg);
+  box-shadow: var(--shadow);
+}
+
+.hero-btn-primary:hover {
+  box-shadow: var(--shadow-hover);
+}
+
+.hero-btn-secondary {
+  background: var(--glass);
+  color: var(--text);
+  border: 1px solid var(--glass-border);
+  -webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
+  box-shadow: var(--shadow);
+}
+
+.hero-btn-secondary:hover {
+  background: var(--glass-hover);
+  box-shadow: var(--shadow-hover);
+}
+
+/* ==========================================================================
+   10. Landing About Section
+   ========================================================================== */
+
+.landing-about {
+  max-width: 720px;
+  margin: 0 auto 3rem;
+}
+
+.landing-about h2 {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  margin-bottom: 1.5rem;
+}
+
+.about-body {
+  background: var(--glass);
+  -webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 2.5rem;
+}
+
+.about-body p {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.9;
+  margin-bottom: 1.25rem;
+}
+
+.about-body p:last-child {
+  margin-bottom: 0;
+}
+
+.about-socials {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.about-body:has(.about-socials) {
+  padding-bottom: 1.5rem;
+}
+
+.about-social-link {
+  font-family: "Roboto Mono", monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-decoration: none;
+  padding: 0.4rem 0.9rem;
+  border-radius: 20px;
+  background: var(--glass-strong);
+  border: 1px solid var(--glass-border);
+  transition:
+    color 0.25s,
+    background 0.25s,
+    transform 0.2s;
+  letter-spacing: 0.01em;
+}
+
+.about-social-link:hover {
+  color: var(--text);
+  background: var(--glass-hover);
+  transform: translateY(-1px);
+}
+
+/* ==========================================================================
+   11. Tags
+   ========================================================================== */
+
+.tag-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.tag {
+  font-family: "Roboto Mono", monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 0.35rem 0.75rem;
+  border-radius: 8px;
+  background: var(--glass-strong);
+  -webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
+  border: 1px solid var(--glass-border);
+  color: var(--text-secondary);
+  letter-spacing: 0.02em;
+}
+
+/* ==========================================================================
+   12. Portfolio
+   ========================================================================== */
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+}
+
+.project-card {
+  display: block;
+  background: var(--glass);
+  -webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 2rem;
+  text-decoration: none;
+  color: inherit;
+  transition:
+    box-shadow 0.3s,
+    transform 0.3s;
+}
+
+.project-card:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateY(-3px);
+}
+
+.project-number {
+  font-family: "Roboto Mono", monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+}
+
+.project-card h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin: 0.75rem 0 0.5rem;
+}
+
+.project-card p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+}
+
+.project-card .tag-list {
+  margin-top: auto;
+}
+
+/* ==========================================================================
+   13. Footer
+   ========================================================================== */
+
+footer {
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 2rem;
+  border-top: 1px solid var(--border);
+}
+
+footer p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+/* ==========================================================================
+   14. Responsive — Mobile (≤ 640px)
+   ========================================================================== */
+
+@media (max-width: 640px) {
+  nav {
+    margin: 0.5rem 0.75rem 0;
+    padding: 0.6rem 1rem;
+    border-radius: 12px;
+  }
+
+  .nav-logo {
+    font-size: 1.05rem;
+  }
+
+  .nav-links a {
+    font-size: 0.72rem;
+    padding: 0.35rem 0.55rem;
+  }
+
+  main {
+    padding: 1.25rem 1rem 3rem;
+  }
+
+  .page-header h1 {
+    font-size: 1.75rem;
+  }
+
+  #content > h1 {
+    font-size: 1.75rem;
+    margin-bottom: 1.75rem;
+  }
+
+  article {
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+  }
+
+  article h2 {
+    font-size: 1.25rem;
+  }
+
+  article pre {
+    padding: 1rem;
+    font-size: 0.8rem;
+    border-radius: 10px;
+  }
+
+  .about-body {
+    padding: 1.75rem;
+  }
+
+  .hero {
+    padding: 3rem 0.5rem 2rem;
+  }
+
+  .hero-name {
+    font-size: 2.25rem;
+  }
+
+  .hero-title {
+    font-size: 1rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 0.5rem;
+  }
+
+  .hero-btn {
+    text-align: center;
+  }
+
+  .landing-about h2 {
+    font-size: 1.5rem;
+  }
+
+  .project-grid {
+    grid-template-columns: 1fr;
+  }
+
+  footer {
+    padding: 1.5rem 1rem;
+  }
+}
+
+/* ==========================================================================
+   15. Responsive — Tablet (641px – 900px)
+   ========================================================================== */
+
+@media (min-width: 641px) and (max-width: 900px) {
+  nav {
+    margin: 0.75rem 1.25rem 0;
+  }
+
+  main,
+  footer {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  .project-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ==========================================================================
+   16. Lazy Loading
+   ========================================================================== */
+
+article.lazy-hidden {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+article.lazy-visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease;
+}
+
+.load-more-btn {
+  display: block;
+  margin: 2rem auto;
+  padding: 0.7rem 2rem;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--glass);
+  -webkit-backdrop-filter: var(--blur);
+  backdrop-filter: var(--blur);
+  border: 1px solid var(--glass-border);
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  transition:
+    transform 0.2s,
+    box-shadow 0.25s,
+    background 0.25s;
+}
+
+.load-more-btn:hover {
+  transform: translateY(-2px);
+  background: var(--glass-hover);
+  box-shadow: var(--shadow-hover);
+}
+
+/* ==========================================================================
+   17. Print
+   ========================================================================== */
+
+@media print {
+  *,
+  *::before,
+  *::after {
+    background: transparent !important;
+    color: #000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+
+  body {
+    font-size: 12pt;
+    line-height: 1.5;
+  }
+
+  nav,
+  .skip-link,
+  .ap,
+  .hero-actions,
+  .load-more-btn {
+    display: none !important;
+  }
+
+  main {
+    max-width: 100%;
+    padding: 0;
+  }
+
+  article {
+    border: 1px solid #ccc;
+    page-break-inside: avoid;
+    margin-bottom: 1rem;
+  }
+
+  a {
+    text-decoration: underline;
+  }
+
+  a[href]::after {
+    content: " (" attr(href) ")";
+    font-size: 0.8em;
+    color: #666 !important;
+  }
+
+  nav a[href]::after,
+  .hero-btn[href]::after,
+  .about-social-link[href]::after,
+  .post-permalink[href]::after {
+    content: none;
+  }
+
+  footer {
+    border-top: 1px solid #ccc;
+  }
+}
