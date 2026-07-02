@@ -15,7 +15,6 @@ olarak yüklenir, depoda `node_modules` yoktur.
 - **Arama & etiketler** — istemci tarafı tam metin arama ve etiket filtresi.
 - **Özet + tekil yazı görünümü** — listede ilk paragraf ve okuma süresi;
   `blog.html#yazi-slug` hash rotası ile tekil sayfa.
-- **Yorumlar** — giscus (GitHub Discussions) ile, yazı başına ayrı thread.
 - **Tema anahtarı** — sistem tercihini izler, nav'daki düğme ile manuel
   geçiş yapılır ve `localStorage`'da kalıcıdır (FOUC yok).
 - **Ses oynatıcı** — `@audio:` direktifi; klavye ile sarma, hata durumu
@@ -98,16 +97,6 @@ paylaşılabilir; aynı başlıktan iki yazı varsa `-2`, `-3` eklenir.
   kontrolü ve `tools/generate.py --check` (üretilen dosyalar bayatsa CI
   kırmızı olur).
 
-## Yorumlar (giscus)
-
-Yorumlar GitHub Discussions üzerinde tutulur; yapılandırma
-`script.js` başındaki `GISCUS` sabitindedir (repo, `repoId`,
-`categoryId` hazır doldurulmuştur, Discussions etkin).
-
-**Tek manuel adım:** [github.com/apps/giscus](https://github.com/apps/giscus)
-adresinden giscus uygulamasını bu repoya kur. Kurulana kadar yorum
-bölümü iframe içinde "giscus is not installed" uyarısı gösterir.
-
 ## Analitik (isteğe bağlı, çerezsiz)
 
 [GoatCounter](https://www.goatcounter.com) entegrasyonu hazır ama
@@ -163,7 +152,6 @@ hash ile sürümlenir ve eski önbelleklerini kendisi temizler.
 - [ ] Sosyal medya linklerini (`href="#"`) ve `mailto:ornek@mail.com`
       adresini gerçek değerlerle güncelle (`index.html` + `en/index.html`).
 - [ ] Portföy kartlarındaki proje linklerini gerçek URL'lerle değiştir.
-- [ ] giscus uygulamasını repoya kur (yukarıya bak).
 
 ## Lisans
 

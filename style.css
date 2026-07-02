@@ -176,10 +176,12 @@ nav {
   letter-spacing: -0.04em;
   color: var(--text);
   text-decoration: none;
+  white-space: nowrap;
 }
 
 .nav-links {
   display: flex;
+  align-items: center;
   gap: 0.2rem;
 }
 
@@ -215,6 +217,7 @@ nav {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
   width: 30px;
   height: 30px;
   margin-left: 0.35rem;
@@ -347,7 +350,8 @@ main {
   flex: 1;
   min-width: 220px;
   font-family: "Montserrat", sans-serif;
-  font-size: 0.9rem;
+  /* 16px floor prevents iOS Safari from auto-zooming the focused input. */
+  font-size: 1rem;
   color: var(--text);
   background: var(--glass);
   -webkit-backdrop-filter: var(--blur);
@@ -401,8 +405,9 @@ main {
 
 .post-meta {
   display: flex;
-  align-items: center;
-  gap: 0.75rem;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.75rem;
   margin-bottom: 0.75rem;
 }
 
@@ -465,17 +470,6 @@ main {
   border-top: 1px solid var(--border);
 }
 
-.comments {
-  margin-top: 2rem;
-}
-
-.comments h2 {
-  font-size: 1.25rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  margin-bottom: 1rem;
-}
-
 article {
   background: var(--glass);
   -webkit-backdrop-filter: var(--blur);
@@ -495,10 +489,14 @@ article:hover {
   transform: translateY(-1px);
 }
 
+/*
+ * The permalink wrapper must stay margin-free: it sits inside the
+ * .post-meta flex row next to .reading-time, and any extra box height
+ * would knock the two labels off a shared baseline.
+ */
 .post-permalink {
   display: inline-block;
   text-decoration: none;
-  margin-bottom: 0.75rem;
 }
 
 .post-permalink:hover time {
@@ -1110,12 +1108,42 @@ footer p {
   }
 
   .nav-logo {
-    font-size: 1.05rem;
+    font-size: 1rem;
   }
 
   .nav-links a {
-    font-size: 0.72rem;
-    padding: 0.35rem 0.55rem;
+    font-size: 0.7rem;
+    padding: 0.3rem 0.5rem;
+  }
+
+  /*
+   * The logo already links home, so the explicit "Home" item is
+   * redundant on narrow screens — hiding it keeps the pill nav on a
+   * single line down to 320px-wide viewports.
+   */
+  .nav-home {
+    display: none;
+  }
+
+  .theme-toggle {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* Ultra-narrow phones (≤ 380px): shave the last few pixels so the pill
+   nav never wraps or scrolls, down to 320px viewports. */
+@media (max-width: 380px) {
+  nav {
+    padding: 0.6rem 0.8rem;
+  }
+
+  .nav-logo {
+    font-size: 0.95rem;
+  }
+
+  .nav-links a {
+    padding: 0.3rem 0.4rem;
   }
 
   main {
@@ -1305,7 +1333,6 @@ article.lazy-visible {
   .load-more-btn,
   .blog-toolbar,
   .copy-btn,
-  .comments,
   .back-link,
   .read-more {
     display: none !important;

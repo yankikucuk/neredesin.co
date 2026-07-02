@@ -3,7 +3,7 @@
  * markdown rendering (marked + DOMPurify), One Dark Pro syntax highlighting
  * (highlight.js core build with a curated language set), client-side search
  * and tag filtering, summary/single-post views over hash routing, custom
- * audio players, giscus comments and lazy-reveal animations.
+ * audio players and lazy-reveal animations.
  *
  * The module resolves content URLs against its own location
  * (`import.meta.url`), so localized pages in subdirectories (e.g. `en/`)
@@ -52,18 +52,6 @@ import {
 /** Site display name, used in document titles. @type {string} */
 const SITE_NAME = "Neredesin Co?";
 
-/**
- * giscus (GitHub Discussions) comment configuration. IDs come from
- * https://giscus.app after installing the giscus GitHub App on the repo;
- * set `repoId` to "" to disable comments entirely.
- */
-const GISCUS = {
-  repo: "yankikucuk/neredesin.co",
-  repoId: "R_kgDOTKzP3g",
-  category: "Announcements",
-  categoryId: "DIC_kwDOTKzP3s4DAVBr",
-};
-
 /** Posts rendered per batch before the "load more" button. @type {number} */
 const POSTS_PER_PAGE = 5;
 
@@ -96,7 +84,6 @@ const STRINGS = {
     audioPosition: "Ses konumu",
     audioError: "Ses dosyası yüklenemedi.",
     permalink: "Bu yazının bağlantısı",
-    comments: "Yorumlar",
   },
   en: {
     searchPlaceholder: "Search posts…",
@@ -115,7 +102,6 @@ const STRINGS = {
     audioPosition: "Audio position",
     audioError: "Audio file could not be loaded.",
     permalink: "Permalink to this post",
-    comments: "Comments",
   },
 };
 
@@ -406,45 +392,6 @@ function addCopyButtons(root) {
   });
 }
 
-/**
- * Mounts a giscus (GitHub Discussions) comment thread for a post.
- * No-op when giscus is unconfigured.
- *
- * @param {HTMLElement} container - Element to append the thread into.
- * @param {string} slug - Post slug, used as the discussion mapping term.
- */
-function mountComments(container, slug) {
-  if (!GISCUS.repoId) return;
-
-  const section = document.createElement("section");
-  section.className = "comments";
-  section.innerHTML = `<h2>${L.comments}</h2>`;
-
-  const s = document.createElement("script");
-  s.src = "https://giscus.app/client.js";
-  s.async = true;
-  s.crossOrigin = "anonymous";
-  const attrs = {
-    "data-repo": GISCUS.repo,
-    "data-repo-id": GISCUS.repoId,
-    "data-category": GISCUS.category,
-    "data-category-id": GISCUS.categoryId,
-    "data-mapping": "specific",
-    "data-term": slug,
-    "data-strict": "0",
-    "data-reactions-enabled": "1",
-    "data-emit-metadata": "0",
-    "data-input-position": "bottom",
-    "data-theme": "preferred_color_scheme",
-    "data-lang": L === STRINGS.en ? "en" : "tr",
-    "data-loading": "lazy",
-  };
-  for (const [k, v] of Object.entries(attrs)) s.setAttribute(k, v);
-
-  section.appendChild(s);
-  container.appendChild(section);
-}
-
 /* ==========================================================================
    Post loading & views
    ========================================================================== */
@@ -648,7 +595,7 @@ function renderListBody(list) {
 
 /**
  * Renders the single-post view for a slug: back link, full article,
- * copy buttons, audio players and the comment thread.
+ * copy buttons and audio players.
  *
  * @param {Post} post
  */
@@ -673,7 +620,6 @@ function renderPost(post) {
 
   addCopyButtons(article);
   initAudioPlayers(article);
-  mountComments(content, post.slug);
 
   window.scrollTo({
     top: 0,

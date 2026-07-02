@@ -7,7 +7,7 @@
  *   - sounds/ media               cache-first (large, effectively immutable)
  *   - other same-origin assets    stale-while-revalidate (?v= ignored)
  *   - CDN (jsdelivr, Google Fonts) cache-first (URLs are version-pinned)
- *   - everything else             untouched (giscus, analytics)
+ *   - everything else             untouched (e.g. analytics)
  *
  * CACHE_VERSION is stamped by tools/generate.py from a content hash of
  * the site's own assets, so every release activates a fresh cache and
@@ -16,7 +16,7 @@
  * @license MIT
  */
 
-const CACHE_VERSION = "8be5661e";
+const CACHE_VERSION = "22381d55";
 const CACHE_NAME = `neredesin-${CACHE_VERSION}`;
 
 /** App shell precached on install (relative to the worker's scope). */

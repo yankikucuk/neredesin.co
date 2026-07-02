@@ -55,9 +55,8 @@
   }
 
   /**
-   * Applies a theme override: sets the html attribute, persists it,
-   * keeps the browser-chrome color in sync and notifies the giscus
-   * iframe (if present) so comments follow the site theme.
+   * Applies a theme override: sets the html attribute, persists it and
+   * keeps the browser-chrome color in sync.
    * @param {"light"|"dark"} theme
    */
   function applyTheme(theme) {
@@ -72,14 +71,6 @@
     document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
       m.setAttribute("content", color);
     });
-
-    var giscus = document.querySelector("iframe.giscus-frame");
-    if (giscus) {
-      giscus.contentWindow.postMessage(
-        { giscus: { setConfig: { theme: theme } } },
-        "https://giscus.app",
-      );
-    }
   }
 
   document.addEventListener("DOMContentLoaded", function () {
