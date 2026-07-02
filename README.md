@@ -1,66 +1,136 @@
 # Neredesin Co?
 
-Sıfır bağımlılıklı, tamamen statik kişisel site + markdown blog. Build adımı yok;
-dosyalar doğrudan tarayıcıda render edilir.
+Statik kişisel site + markdown blog. Build adımı yok; dosyalar doğrudan
+tarayıcıda render edilir. Bağımlılıklar sürüm sabitlenmiş CDN modülleri
+olarak yüklenir, depoda `node_modules` yoktur.
 
-## Teknoloji
+**Canlı:** https://yankikucuk.github.io/neredesin.co/
 
-- Vanilla HTML / CSS / JS (ES modülleri)
-- Markdown render: [marked.js](https://marked.js.org) (jsDelivr üzerinden, sabit sürüm)
-- Tasarım: glassmorphism, `prefers-color-scheme` ile otomatik açık/koyu tema
-- Fontlar: Montserrat + Roboto Mono (Google Fonts)
+## Özellikler
+
+- **Markdown blog** — `posts/` altındaki `.md` dosyaları istemci tarafında
+  render edilir (marked 18 + DOMPurify ile XSS'e karşı sanitize).
+- **Sözdizimi renklendirme** — One Dark Pro paleti, highlight.js core +
+  seçili 11 dil (tam paket yerine ~%95 daha küçük yük).
+- **Arama & etiketler** — istemci tarafı tam metin arama ve etiket filtresi.
+- **Özet + tekil yazı görünümü** — listede ilk paragraf ve okuma süresi;
+  `blog.html#yazi-slug` hash rotası ile tekil sayfa.
+- **Yorumlar** — giscus (GitHub Discussions) ile, yazı başına ayrı thread.
+- **Tema anahtarı** — sistem tercihini izler, nav'daki düğme ile manuel
+  geçiş yapılır ve `localStorage`'da kalıcıdır (FOUC yok).
+- **Ses oynatıcı** — `@audio:` direktifi; klavye ile sarma, hata durumu
+  bildirimi, `preload="none"`.
+- **Çok dillilik** — `en/` altında İngilizce sürüm, `hreflang`
+  alternatifleri ile.
+- **Offline / PWA** — service worker (network-first içerik, cache-first
+  CDN), manifest + ikon seti.
+- **RSS** — Atom formatında [feed.xml](feed.xml), `tools/generate.py` üretir.
+- **SEO** — canonical, Open Graph + Twitter Card + og-image, JSON-LD
+  (Person / WebSite / Blog), sitemap, robots.txt.
+- **Güvenlik** — tüm sayfalarda Content-Security-Policy, sanitize edilmiş
+  render, sürüm sabitli bağımlılıklar.
+- **Erişilebilirlik** — skip-link, ARIA'lı oynatıcı/düğmeler, tek `h1` +
+  otomatik başlık indirgeme, `prefers-reduced-motion` desteği.
 
 ## Çalıştırma
 
 ```bash
-python3 serve.py 8080
+python3 serve.py 8080        # veya: npm run serve
 ```
 
-`serve.py`, standart `python3 -m http.server`'ın üzerine tek bir davranış ekler:
-eşleşmeyen bir yol istendiğinde `404.html`'i döner. Netlify, Vercel, GitHub Pages
-ve Cloudflare Pages bunu zaten kutudan çıkar yapar; bu script sadece yerelde
-aynı deneyimi sağlar.
+`serve.py`, standart `http.server`'ın üzerine tek davranış ekler:
+eşleşmeyen yollar için `404.html` döner (GitHub Pages'in yaptığı gibi).
 
 ## Proje Yapısı
 
 ```
-index.html          Landing page (hero + hakkımda + sosyal linkler)
-blog.html            Blog listesi (posts/ içeriğini JS ile render eder)
-portfolio.html        Portföy / proje kartları
-404.html             Özel "sayfa bulunamadı" ekranı
-style.css            Tüm sayfalar için tek stylesheet
-script.js            Blog motoru: frontmatter parse, markdown render, ses oynatıcı
-posts/               Blog yazıları (.md) + index.json (yazı sırası)
-sounds/              Yazı içine gömülü ses dosyaları
-assets-src/          Marka görsellerinin SVG kaynakları (og-image, ikonlar)
+index.html            Landing page (hero + hakkımda + sosyal linkler)
+blog.html             Blog: liste + tekil yazı görünümü (hash rotası)
+portfolio.html        Portföy kartları
+404.html              Özel hata sayfası
+en/                   İngilizce sayfa sürümleri
+style.css             Tek stylesheet (tasarım tokenları + tema blokları)
+script.js             Blog motoru (ES module)
+site.js               Tema, service worker kaydı, analitik (tüm sayfalar)
+sw.js                 Service worker (offline önbellekleme)
+lib/utils.js          Saf yardımcı fonksiyonlar (test edilebilir)
+tests/                Birim testleri (node --test)
+tools/generate.py     İçerik hattı: feed + sitemap + cache-bust damgası
+posts/                Yazılar (.md) + index.json (sıralama)
+sounds/               Ses dosyaları
+assets-src/           Marka görsellerinin SVG kaynakları
 ```
 
 ## Yeni Blog Yazısı Ekleme
 
-1. `posts/` klasörüne `00N.md` biçiminde bir dosya ekle:
+1. `posts/` içine bir `.md` dosyası ekle:
+
    ```markdown
    ---
    title: Yazı Başlığı
-   date: YYYY-MM-DD
+   date: 2026-07-02
+   tags: javascript, notlar
    ---
 
-   İçerik buraya. Standart markdown desteklenir.
+   İlk paragraf listede özet olarak görünür.
 
    @audio:sounds/dosya.mp3
    ```
-2. `posts/index.json` dizisine dosya adını ekle (en yeni yazı en başta).
-3. Yazı otomatik olarak slug'lanmış bir kimlikle (`#baslik-boyle-olusur`) tekil
-   olarak bağlantılanabilir hale gelir.
 
-`@audio:<yol>` satırı, oynat/duraklat, ilerleme çubuğu (mouse + klavye ok
-tuşlarıyla) ve süre göstergesi içeren bir ses oynatıcıya dönüştürülür.
+2. Dosya adını `posts/index.json` dizisine ekle (en yeni en başta).
+3. Üretilen dosyaları tazele ve testleri koştur:
+
+   ```bash
+   npm run generate   # feed.xml, sitemap.xml, ?v= damgaları
+   npm test
+   ```
+
+4. Commit + push — GitHub Pages ~1 dakika içinde yayınlar.
+
+Yazı, başlığından türetilen slug ile `blog.html#yazi-basligi` adresinden
+paylaşılabilir; aynı başlıktan iki yazı varsa `-2`, `-3` eklenir.
+
+## Testler & CI
+
+- `npm test` — `lib/utils.js` saf fonksiyonlarının birim testleri
+  (Node'un yerleşik test koşucusu, sıfır bağımlılık).
+- `.github/workflows/ci.yml` — her push/PR'da: testler, Prettier format
+  kontrolü ve `tools/generate.py --check` (üretilen dosyalar bayatsa CI
+  kırmızı olur).
+
+## Yorumlar (giscus)
+
+Yorumlar GitHub Discussions üzerinde tutulur; yapılandırma
+`script.js` başındaki `GISCUS` sabitindedir (repo, `repoId`,
+`categoryId` hazır doldurulmuştur, Discussions etkin).
+
+**Tek manuel adım:** [github.com/apps/giscus](https://github.com/apps/giscus)
+adresinden giscus uygulamasını bu repoya kur. Kurulana kadar yorum
+bölümü iframe içinde "giscus is not installed" uyarısı gösterir.
+
+## Analitik (isteğe bağlı, çerezsiz)
+
+[GoatCounter](https://www.goatcounter.com) entegrasyonu hazır ama
+**kapalı**. Açmak için:
+
+1. goatcounter.com'da ücretsiz bir site kodu al (örn. `neredesin`).
+2. `site.js` içindeki `GOATCOUNTER_CODE` değerine yaz.
+3. `npm run generate` + commit + push.
+
+Kod boş kaldığı sürece hiçbir istek gönderilmez.
+
+## Tema
+
+Site varsayılan olarak `prefers-color-scheme`'i izler. Nav'daki düğme
+`<html data-theme="light|dark">` özniteliğini yazar ve `localStorage`'a
+kaydeder; `site.js` bunu ilk boyamadan önce uygular. CSS'te koyu tema
+tokenları iki blokta bilinçli olarak tekrarlanır (media query + öznitelik)
+— build adımı olmayan projede en sağlam kalıp budur.
 
 ## Marka Görsellerini Yeniden Üretme
 
-`assets-src/` altındaki SVG kaynaklar, kök dizindeki PNG'lerin
-(og-image.png, icon-192.png, icon-512.png, apple-touch-icon.png,
-favicon-32.png) orijinalidir. Metni veya renkleri değiştirdikten sonra
-yeniden rasterize etmek için (macOS, ek bağımlılık gerekmez):
+`assets-src/` altındaki SVG'ler kaynaktır; PNG'leri yeniden üretmek için
+(macOS, ek araç gerekmez):
 
 ```bash
 sips -s format png assets-src/og-image.svg --out og-image.png
@@ -72,28 +142,28 @@ sips -z 32 32 -s format png favicon.svg --out favicon-32.png
 
 ## Yayın
 
-Site [GitHub Pages](https://pages.github.com) üzerinden yayınlanıyor:
-**https://yankikucuk.github.io/neredesin.co/**
+`main` dalına her push, GitHub Pages tarafından otomatik yayınlanır
+("Deploy from a branch" → `main` / kök). `tools/generate.py`'nin bastığı
+`?v=<hash>` sorgu parametreleri, CSS/JS değiştiğinde tarayıcı ve CDN
+önbelleklerinin eski sürümü göstermesini engeller; service worker da aynı
+hash ile sürümlenir ve eski önbelleklerini kendisi temizler.
 
-`main` dalına yapılan her `git push`, Pages tarafından otomatik olarak
-algılanıp yayınlanır (genelde ~1 dakika içinde) — ekstra bir build/deploy
-adımı yok. Repo ayarlarında Pages kaynağı "Deploy from a branch" →
-`main` / `/ (root)` olarak yapılandırıldı.
+### Custom Domain'e Taşıma
 
-Tüm iç linkler göreli (`blog.html`, `index.html` vb.) olduğu için site
-hem bu subpath altında hem de ileride bir custom domain veya
-`kullaniciadi.github.io` kök adresine taşınsa da değişiklik gerektirmeden
-çalışır.
+1. Alan adını satın al ve DNS'te `www` için `yankikucuk.github.io`'ya
+   CNAME kaydı (apex için 185.199.108-111.153 A kayıtları) ekle.
+2. Repo → Settings → Pages → Custom domain alanına alan adını yaz
+   (GitHub `CNAME` dosyasını otomatik oluşturur) ve "Enforce HTTPS"i aç.
+3. `tools/generate.py` içindeki `SITE` sabitini ve HTML'lerdeki mutlak
+   URL'leri (canonical, og:url, hreflang, JSON-LD) yeni alan adıyla
+   değiştir; `npm run generate` çalıştır.
 
 ## Yayına Almadan Önce
 
-- [ ] `index.html` içindeki sosyal medya linklerini (`href="#"`) ve
-      `mailto:ornek@mail.com` adresini gerçek değerlerle güncelle.
-- [ ] Portföy kartlarındaki proje linklerini (`href="#"`) gerçek URL'lerle
-      değiştir.
-- [ ] İsteğe bağlı: `style.css` / `script.js` dosyalarını bir minifier'dan
-      geçir. Proje bilinçli olarak build adımı içermediği için bu depoya
-      dahil edilmedi; üretime alırken tek seferlik bir adım olarak uygulanabilir.
+- [ ] Sosyal medya linklerini (`href="#"`) ve `mailto:ornek@mail.com`
+      adresini gerçek değerlerle güncelle (`index.html` + `en/index.html`).
+- [ ] Portföy kartlarındaki proje linklerini gerçek URL'lerle değiştir.
+- [ ] giscus uygulamasını repoya kur (yukarıya bak).
 
 ## Lisans
 

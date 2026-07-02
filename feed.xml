@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="tr">
+  <title>Neredesin Co? — Blog</title>
+  <link href="https://yankikucuk.github.io/neredesin.co/blog.html" />
+  <link rel="self" href="https://yankikucuk.github.io/neredesin.co/feed.xml" />
+  <id>https://yankikucuk.github.io/neredesin.co/</id>
+  <updated>2025-06-30T00:00:00Z</updated>
+  <author>
+    <name>Yankı Küçük</name>
+  </author>
+  <entry>
+    <title>Markdown Blog Sistemi</title>
+    <link href="https://yankikucuk.github.io/neredesin.co/blog.html#markdown-blog-sistemi" />
+    <id>https://yankikucuk.github.io/neredesin.co/blog.html#markdown-blog-sistemi</id>
+    <updated>2025-06-30T00:00:00Z</updated>
+    <summary>Bu site tamamen statik dosyalarla çalışıyor. Sunucu tarafında hiçbir işlem yok.</summary>
+    <category term="markdown" />
+    <category term="meta" />
+  </entry>
+  <entry>
+    <title>JavaScript Notları</title>
+    <link href="https://yankikucuk.github.io/neredesin.co/blog.html#javascript-notlari" />
+    <id>https://yankikucuk.github.io/neredesin.co/blog.html#javascript-notlari</id>
+    <updated>2025-06-29T00:00:00Z</updated>
+    <summary>JavaScript öğrenirken aldığım bazı notlar:</summary>
+    <category term="javascript" />
+    <category term="notlar" />
+  </entry>
+  <entry>
+    <title>İlk Yazım</title>
+    <link href="https://yankikucuk.github.io/neredesin.co/blog.html#ilk-yazim" />
+    <id>https://yankikucuk.github.io/neredesin.co/blog.html#ilk-yazim</id>
+    <updated>2025-06-28T00:00:00Z</updated>
+    <summary>Bu benim ilk blog yazım. Markdown ile yazıldı.</summary>
+    <category term="kişisel" />
+    <category term="başlangıç" />
+  </entry>
+</feed>

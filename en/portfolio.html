@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="tr">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta
@@ -10,10 +10,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
-    <meta
-      name="description"
-      content="Portföy — üzerinde çalıştığım projeler ve çalışmalar."
-    />
+    <meta name="description" content="Portfolio — projects I have worked on." />
     <meta
       name="theme-color"
       content="#000"
@@ -28,17 +25,18 @@
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Portföy" />
+    <meta property="og:title" content="Portfolio" />
     <meta
       property="og:description"
-      content="Portföy — üzerinde çalıştığım projeler ve çalışmalar."
+      content="Portfolio — projects I have worked on."
     />
     <meta
       property="og:url"
-      content="https://yankikucuk.github.io/neredesin.co/portfolio.html"
+      content="https://yankikucuk.github.io/neredesin.co/en/portfolio.html"
     />
     <meta property="og:site_name" content="Neredesin Co?" />
-    <meta property="og:locale" content="tr_TR" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="tr_TR" />
     <meta
       property="og:image"
       content="https://yankikucuk.github.io/neredesin.co/og-image.png"
@@ -48,10 +46,10 @@
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Portföy" />
+    <meta name="twitter:title" content="Portfolio" />
     <meta
       name="twitter:description"
-      content="Portföy — üzerinde çalıştığım projeler ve çalışmalar."
+      content="Portfolio — projects I have worked on."
     />
     <meta
       name="twitter:image"
@@ -60,7 +58,7 @@
 
     <link
       rel="canonical"
-      href="https://yankikucuk.github.io/neredesin.co/portfolio.html"
+      href="https://yankikucuk.github.io/neredesin.co/en/portfolio.html"
     />
     <link
       rel="alternate"
@@ -81,42 +79,44 @@
       rel="alternate"
       type="application/atom+xml"
       title="Neredesin Co? — Blog"
-      href="feed.xml"
+      href="../feed.xml"
     />
-    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
-    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
-    <link rel="manifest" href="manifest.json" />
-    <link rel="stylesheet" href="style.css?v=8be5661e" />
-    <script src="site.js?v=8be5661e"></script>
+    <link rel="icon" type="image/svg+xml" href="../favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png" />
+    <link rel="apple-touch-icon" href="../apple-touch-icon.png" />
+    <link rel="manifest" href="../manifest.json" />
+    <link rel="stylesheet" href="../style.css?v=8be5661e" />
+    <script src="../site.js?v=8be5661e"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Roboto+Mono:wght@400;500&display=swap"
       rel="stylesheet"
     />
-    <title>Portföy — Neredesin Co?</title>
+    <title>Portfolio — Neredesin Co?</title>
   </head>
   <body>
-    <a href="#content" class="skip-link">İçeriğe geç</a>
+    <a href="#content" class="skip-link">Skip to content</a>
     <nav aria-label="Main navigation">
       <a href="index.html" class="nav-logo">Neredesin Co?</a>
       <div class="nav-links">
-        <a href="index.html">Ana Sayfa</a>
+        <a href="index.html">Home</a>
         <a href="blog.html">Blog</a>
-        <a href="portfolio.html" class="active" aria-current="page">Portföy</a>
+        <a href="portfolio.html" class="active" aria-current="page"
+          >Portfolio</a
+        >
         <a
-          href="en/portfolio.html"
+          href="../portfolio.html"
           class="nav-lang"
-          lang="en"
-          hreflang="en"
-          aria-label="Switch to English"
-          >EN</a
+          lang="tr"
+          hreflang="tr"
+          aria-label="Türkçe sürüme geç"
+          >TR</a
         >
         <button
           class="theme-toggle"
           type="button"
-          aria-label="Koyu/açık tema arasında geçiş yap"
+          aria-label="Toggle dark/light theme"
         >
           <svg
             class="icon-moon"
@@ -150,16 +150,16 @@
     </nav>
     <main id="content">
       <header class="page-header">
-        <h1>Portföy</h1>
-        <p class="page-subtitle">Üzerinde çalıştığım projeler.</p>
+        <h1>Portfolio</h1>
+        <p class="page-subtitle">Projects I have worked on.</p>
       </header>
       <div class="project-grid">
         <a class="project-card" href="#">
           <span class="project-number">01</span>
-          <h2>E-Ticaret Platformu</h2>
+          <h2>E-Commerce Platform</h2>
           <p>
-            Modern bir e-ticaret deneyimi. React, Node.js ve PostgreSQL ile
-            geliştirildi.
+            A modern e-commerce experience. Built with React, Node.js and
+            PostgreSQL.
           </p>
           <div class="tag-list">
             <span class="tag">React</span>
@@ -169,10 +169,9 @@
         </a>
         <a class="project-card" href="#">
           <span class="project-number">02</span>
-          <h2>Task Yönetim Uygulaması</h2>
+          <h2>Task Management App</h2>
           <p>
-            Ekipler için gerçek zamanlı görev takibi. WebSocket ile anlık
-            güncelleme.
+            Real-time task tracking for teams. Instant updates over WebSockets.
           </p>
           <div class="tag-list">
             <span class="tag">TypeScript</span>
@@ -182,10 +181,9 @@
         </a>
         <a class="project-card" href="#">
           <span class="project-number">03</span>
-          <h2>Hava Durumu API</h2>
+          <h2>Weather API</h2>
           <p>
-            RESTful hava durumu servisi. Önbellek ve rate limiting ile optimize
-            edildi.
+            A RESTful weather service, optimized with caching and rate limiting.
           </p>
           <div class="tag-list">
             <span class="tag">Python</span>
@@ -197,8 +195,8 @@
           <span class="project-number">04</span>
           <h2>Markdown Blog</h2>
           <p>
-            Statik dosyalarla çalışan minimalist blog sistemi. Şu an
-            buradasınız.
+            A minimalist blog system running on static files. You are looking at
+            it right now.
           </p>
           <div class="tag-list">
             <span class="tag">HTML</span>
@@ -209,7 +207,7 @@
       </div>
     </main>
     <footer>
-      <p>&copy; 2026 &mdash; Markdown ile oluşturuldu.</p>
+      <p>&copy; 2026 &mdash; Built with Markdown.</p>
     </footer>
   </body>
 </html>

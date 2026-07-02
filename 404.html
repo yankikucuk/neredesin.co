@@ -3,6 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://giscus.app https://gc.zgo.at; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: https://*.goatcounter.com; media-src 'self'; connect-src 'self' https://*.goatcounter.com; frame-src https://giscus.app; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'"
+    />
+    <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, viewport-fit=cover"
     />
@@ -22,7 +26,8 @@
     <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
     <link rel="apple-touch-icon" href="apple-touch-icon.png" />
     <link rel="manifest" href="manifest.json" />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="style.css?v=8be5661e" />
+    <script src="site.js?v=8be5661e"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -39,6 +44,47 @@
         <a href="index.html">Ana Sayfa</a>
         <a href="blog.html">Blog</a>
         <a href="portfolio.html">Portföy</a>
+        <a
+          href="en/index.html"
+          class="nav-lang"
+          lang="en"
+          hreflang="en"
+          aria-label="Switch to English"
+          >EN</a
+        >
+        <button
+          class="theme-toggle"
+          type="button"
+          aria-label="Koyu/açık tema arasında geçiş yap"
+        >
+          <svg
+            class="icon-moon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+          </svg>
+          <svg
+            class="icon-sun"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <circle cx="12" cy="12" r="4" />
+            <path
+              d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"
+            />
+          </svg>
+        </button>
       </div>
     </nav>
     <main id="main-content">
@@ -47,9 +93,14 @@
         <h1 class="hero-name">Sayfa Bulunamadı</h1>
         <p class="hero-title">
           Aradığınız sayfa taşınmış, silinmiş veya hiç var olmamış olabilir.
+          <span lang="en" class="hero-title-alt"
+            >The page you are looking for could not be found.</span
+          >
         </p>
         <div class="hero-actions">
-          <a href="index.html" class="hero-btn hero-btn-primary">Ana Sayfaya Dön</a>
+          <a href="index.html" class="hero-btn hero-btn-primary"
+            >Ana Sayfaya Dön</a
+          >
           <a href="blog.html" class="hero-btn hero-btn-secondary">Blog</a>
         </div>
       </section>

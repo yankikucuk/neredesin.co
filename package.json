@@ -1,0 +1,13 @@
+{
+  "name": "neredesin.co",
+  "private": true,
+  "description": "Kişisel site ve markdown blog — statik, bağımlılıksız, build adımı yok.",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "serve": "python3 serve.py 8080",
+    "test": "node --test",
+    "generate": "python3 tools/generate.py",
+    "check": "node --test && python3 tools/generate.py --check"
+  }
+}
